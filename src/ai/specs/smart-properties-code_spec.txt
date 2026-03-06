@@ -1,0 +1,91 @@
+Smart Properties Code Language is a beginner-friendly, clean and readable pseudocode language. 
+It is a weakly typed language where reserved words must begin with the first letter in capital letters and the variables must begin with the first letter in lowercase.
+Newlines matter to indicate the end of a statement. 
+You don't need to instance the variables, the variable type can change depending of the type of the expression assigned.
+It can be unssigned variables, those variables are input variables whose values can be passed through in the test cases later.
+The return statement is optional and should be only at the end the main block.
+It supports Spanish syntax
+
+
+Definitions:
+
+  Assignmet:
+    ```
+    variable01 = "Hello"
+    a = 1.25
+    b = True
+    c = 10
+    d = (a + c) / 10
+    ```
+
+  Expression:
+    ```
+    ( -10.25 + a * c ) / 10
+    ( a > c And a = 0 ) Or b
+    ```
+
+  Control instruction supported:
+    ```
+    If a > 5 Then
+      Print("Hi all")
+    Else If a = 1 Then
+      Print("Good by all")
+    Else 
+      Print("Ok")
+    End
+    ```
+
+  Loop instruction supported:
+    ```
+    c = 0
+    While c < 20 Then
+      Print("c > " + c)
+      c = c + 2
+    End
+    ```
+
+  Return instruction:
+    ```
+    Return a + c
+    ```
+
+  All syntax reserved words ( English | Spanish ):
+    If | Si
+    Then | Entonces
+    Else | Sino
+    While | Mientras
+    End | Fin
+    Return | Retornar
+    And | Y
+    Or | O
+    Not | No
+    True | Verdadero
+    False | Falso
+    Print | Pintar
+    Array | Arreglo
+
+  All supported types:
+    string
+    int
+    float
+    boolean
+
+  Test cases (JSON Array):
+    `[ { "name" : "Registered user with credit Test", "variables" : [ {"name":"rol","type":"string","value":"registered"}, {"name":"creditClient","type":"boolean","value":"true"}, {"name":"orderAmount","type":"float","value":"118.5"} ], "expected" : {"type":"string","value":"account,address,password,credit"} } ]`
+
+
+Example:
+
+  Code:
+    ```
+    If orderAmount < 500 Then
+      promoCode = "promo-code-10"
+    Else
+      promoCode = "promo-code-20"
+    End
+    Return promoCode
+    ```
+
+  Test cases:
+    `[ { "name" : "Order greater than 500 Test", "variables" : [ {"name":"orderAmount","type":"float","value":"750.99"} ], "expected" : {"type":"string","value":"promo-code-20"} } ]`
+ 
