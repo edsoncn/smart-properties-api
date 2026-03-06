@@ -37,14 +37,14 @@ const initUserData = () => {
 };
 
 const allowedOrigins = [
-  'http://localhost:3000',
-  'https://smart-properties-api-bagebahcd4byehc5.eastus2-01.azurewebsites.net'
+  'localhost:3000',
+  'smart-properties-api-bagebahcd4byehc5.eastus2-01.azurewebsites.net'
 ];
 
 const corsConfig = {
     credentials: true, 
     origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
+        if (!origin || allowedOrigins.filter((o) => origin.includes(o)).length > 0) {
             callback(null, true); // Allow the origin
         } else {
             callback(new Error('Not allowed by CORS'), false); // Deny the origin
