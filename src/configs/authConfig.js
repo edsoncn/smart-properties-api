@@ -36,9 +36,20 @@ const initUserData = () => {
     })
 };
 
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://smart-properties-api-bagebahcd4byehc5.eastus2-01.azurewebsites.net'
+];
+
 const corsConfig = {
     credentials: true, 
-    origin: 'http://localhost:3000'
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true); // Allow the origin
+        } else {
+            callback(new Error('Not allowed by CORS'), false); // Deny the origin
+        }
+    }
 };
 
 const getTenant = (req) => {
