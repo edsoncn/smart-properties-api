@@ -77,7 +77,11 @@ const generateResponse = async (userQuestion) => {
             console.log(content);
             console.log("\n");
 
-            jsonResponse = JSON.parse(content.text.value);
+            let jsonString = content.text.value;
+            if (jsonString.startsWith("```json")) {
+                jsonString = jsonString.replace(/^```json/, "").replace(/```$/, "").trim();
+            }
+            jsonResponse = JSON.parse(jsonString);
         }
     }
 
