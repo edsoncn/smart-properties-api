@@ -117,6 +117,9 @@ All supported functions:
 | < | less than |
 | And | logical AND |
 | Or | logical OR |
+| Not | logical Not |
+
+- There is no a "not equals" operator, you can use `Not` instead like: `NOT (a = 20)`
 
 ---
 

@@ -23,7 +23,7 @@ const GENERATE_CODE_QUESTION = description => `
     Description:
     ${description}
 
-    - Only the code generated is required. 
+    - Only the code generated, short description and full description are required. 
     - Validate that the code generated is following the Smart Properties Code Language definition and syntax. 
     - If the description is not clear, generate the code based on the best of your understanding of the description provided.
 `;
@@ -37,7 +37,7 @@ const UPDATE_CODE_QUESTION = (code, update) => `
     Make the following update:
     ${update}
     
-    - Only the code generated is required. 
+    - Only the code generated, short description and full description are required. 
     - Validate that the code generated is following the Smart Properties Code Language definition and syntax. 
     - If the description is not clear, generate the code based on the best of your understanding of the description provided.
 `;
