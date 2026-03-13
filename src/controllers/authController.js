@@ -1,6 +1,6 @@
 const authConfig = require('../configs/authConfig')
 const userService = require('../services/userService')
-const workspaceService = require('../services/workspaceService')
+const tenantService = require('../services/tenantService')
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcryptjs")
 const exceptions = require('../configs/execeptionsConfig')
@@ -14,7 +14,7 @@ const signin = (req, res) => {
     // #swagger.tags = ['Auth']
 
     userService.getByIdentifier(tenant, identifier)
-    .then((user) => {
+    .then(async (user) => {
         if(user){
             let passwordIsValid = bcrypt.compareSync(password, user.password);
 
@@ -26,13 +26,16 @@ const signin = (req, res) => {
                     expiresIn: 86400 // 24 hours
                 });
 
+                const tenantData = await tenantService.getByIdentifier(tenant);
+
                 res.cookie('token', token, { httpOnly: true, maxAge: 24*60*60*1000 });
                 res.status(200).send({
                     userId: identifier,
                     userName: user.name,
                     userEmail: user.email,
                     userIcon: user.icon,
-                    userRol: user.rol
+                    userRol: user.rol,
+                    tenantName: tenantData.name
                 });
             }
         }else{
