@@ -4,12 +4,14 @@ const NOT_FOUND = 'notFound';
 const UNAUTHORIZED = 'unauthorized';
 const FORBIDDEN = 'forbidden' ;
 const SERVER_ERROR = 'serverError' ;
+const BAD_REQUEST = 'badRequest';
 
 const DUPLICATE_CODE = 409;
 const NOT_FOUND_CODE = 404;
 const UNAUTHORIZED_CODE = 401;
 const FORBIDDEN_CODE = 403;
 const SERVER_ERROR_CODE = 500;
+const BAD_REQUEST_CODE = 400;
 
 const createNewError = (message, code, name) => {
     let error = new Error(message);    
@@ -26,7 +28,11 @@ const unauthorizedError = createNewError('unauthorized error', UNAUTHORIZED_CODE
 const forbiddenError = createNewError('forbidden error', FORBIDDEN_CODE, FORBIDDEN);
 
 const serverError = createNewError('internal server error', SERVER_ERROR_CODE, SERVER_ERROR);
+const badRequestError = (propertyName) => 
+    createNewError(`The ${propertyName} is required`, BAD_REQUEST_CODE, BAD_REQUEST);
 
+const badRequestMsgError = (message) => 
+    createNewError(message, BAD_REQUEST_CODE, BAD_REQUEST);
 const handleError = (e) => {
     handleErrorResponse(e);
 }
@@ -78,6 +84,8 @@ module.exports = {
     unauthorizedError,
     forbiddenError,
     serverError,
+    badRequestError,
+    badRequestMsgError,
     handleError,
     handleErrorResponse,
     isDuplicateError,

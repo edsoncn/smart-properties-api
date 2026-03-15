@@ -1,6 +1,7 @@
 const smartPropertyServiceV2 = require('../services/smartPropertyServiceV2');
 const exceptions = require('../configs/execeptionsConfig');
 const authConfig = require('../configs/authConfig')
+const { validateNotEmpty } = require('../helpers/utils');
 
 const getAll = (req, res) => {
     const tenant = authConfig.getTenant(req);
@@ -24,6 +25,13 @@ const save = (req, res) => {
     // #swagger.tags = ['Smart Property']
 
     let smartProperty = req.body;
+    try {
+        validateNotEmpty(smartProperty, 'key', 'Indentifier');
+        validateNotEmpty(smartProperty, 'name', 'Name');
+    } catch (e) {
+        exceptions.handleErrorResponse(e, res);
+        return;
+    }
     let saveOrUpsertAll = Array.isArray(smartProperty) ? smartPropertyServiceV2.upsertAll : smartPropertyServiceV2.save;
 
     saveOrUpsertAll(tenant, workspace, smartProperty)
@@ -42,6 +50,12 @@ const update = (req, res) => {
     // #swagger.tags = ['Smart Property']
 
     let smartProperty = req.body;
+    try {
+        validateNotEmpty(smartProperty, 'name', 'Name');
+    } catch (e) {
+        exceptions.handleErrorResponse(e, res);
+        return;
+    }
 
     smartPropertyServiceV2.update(tenant, workspace, smartProperty)
     .then(() => {

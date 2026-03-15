@@ -1,6 +1,7 @@
 const workspaceService = require('../services/workspaceService');
 const exceptions = require('../configs/execeptionsConfig');
 const authConfig = require('../configs/authConfig')
+const { validateNotEmpty } = require('../helpers/utils');
 
 const getAll = (req, res) => {
     const tenant = authConfig.getTenant(req);
@@ -23,6 +24,13 @@ const save = (req, res) => {
 
     let workspace = req.body;
 
+    try {
+        validateNotEmpty(workspace, 'identifier', 'Indentifier');
+        validateNotEmpty(workspace, 'name', 'Name');
+    } catch (e) {
+        exceptions.handleErrorResponse(e, res);
+        return;
+    }
     workspaceService.save(tenant, workspace)
     .then(() => {
         res.status(201).send();
@@ -38,6 +46,12 @@ const update = (req, res) => {
     // #swagger.tags = ['Workspace']
 
     let workspace = req.body;
+    try {
+        validateNotEmpty(workspace, 'name', 'Name');
+    } catch (e) {
+        exceptions.handleErrorResponse(e, res);
+        return;
+    }
 
     workspaceService.update(tenant, workspace)
     .then(() => {

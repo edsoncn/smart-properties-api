@@ -1,6 +1,7 @@
 const userService = require('../services/userService');
 const exceptions = require('../configs/execeptionsConfig');
 const authConfig = require('../configs/authConfig')
+const { validateNotEmpty, validateEmail } = require('../helpers/utils');
 
 const getAll = (req, res) => {
     const tenant = authConfig.getTenant(req);
@@ -22,6 +23,14 @@ const save = (req, res) => {
     // #swagger.tags = ['User']
 
     let user = req.body;
+    try {
+        validateNotEmpty(user, 'email', 'Email');
+        validateEmail(user.email);
+        validateNotEmpty(user, 'name', 'Name');
+    } catch (e) {
+        exceptions.handleErrorResponse(e, res);
+        return;
+    }
     let password;
 
     if(!user.password){
@@ -77,6 +86,12 @@ const update = (req, res) => {
 
     let user = req.body;
 
+    try {
+        validateNotEmpty(user, 'name', 'Name');
+    } catch (e) {
+        exceptions.handleErrorResponse(e, res);
+        return;
+    }
     userService.update(tenant, user)
     .then(() => {
         res.status(200).send();
